@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@android:drawable/ic_menu_today"
+        android:title="Trang chủ" />
+    <item
+        android:id="@+id/nav_ai_assistant"
+        android:icon="@android:drawable/ic_menu_help"
+        android:title="Trợ lý AI" />
+    <item
+        android:id="@+id/nav_trips"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:title="Chuyến Đi" />
+    <item
+        android:id="@+id/nav_login"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Đăng nhập" />
+</menu>

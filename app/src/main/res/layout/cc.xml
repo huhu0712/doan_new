@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FD"
+    tools:context=".MainActivity">
+
+    <!-- Header với Search Bar (Cố định) -->
+    <View
+        android:id="@+id/headerBackground"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#0066FF"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/searchBar"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="12dp"
+        android:background="@drawable/bg_search_bar"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/ivProfile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@android:drawable/ic_menu_search"
+            app:tint="#999999" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_icon_circle"
+        android:padding="6dp"
+        android:src="@android:drawable/ic_menu_myplaces"
+        app:layout_constraintBottom_toBottomOf="@+id/searchBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/searchBar"
+        app:tint="#FFCC00" />
+
+    <!-- Card Dịch vụ chính (Cố định) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/serviceCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <!-- Hàng 1 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout
+                    android:id="@+id/btnHotel"
+                    style="@style/ServiceItem">
+                    <LinearLayout style="@style/ServiceIconContainer">
+                        <ImageView
+                            style="@style/ServiceIcon"
+                            android:src="@android:drawable/ic_lock_idle_alarm" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="Khách sạn" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnFlight"
+                    style="@style/ServiceItem">
+                    <LinearLayout style="@style/ServiceIconContainer">
+                        <ImageView
+                            style="@style/ServiceIcon"
+                            android:src="@android:drawable/ic_menu_send" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="Vé Máy bay" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnRestaurant"
+                    style="@style/ServiceItem">
+                    <LinearLayout style="@style/ServiceIconContainer">
+                        <ImageView
+                            style="@style/ServiceIcon"
+                            android:src="@android:drawable/ic_menu_today" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="Nhà hàng" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnTrain"
+                    style="@style/ServiceItem">
+                    <LinearLayout style="@style/ServiceIconContainer">
+                        <ImageView
+                            style="@style/ServiceIcon"
+                            android:src="@android:drawable/ic_dialog_map" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceText"
+                        android:text="Vé tàu" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Hàng 2 (Cân đối lại 3 mục - Căn giữa hoàn hảo) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:baselineAligned="false">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5" />
+
+                <LinearLayout
+                    style="@style/ServiceItem"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                    <LinearLayout style="@style/ServiceIconContainerSmall">
+                        <ImageView
+                            style="@style/ServiceIconSmall"
+                            android:src="@android:drawable/ic_menu_view" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceTextSmall"
+                        android:text="Nhà &amp; Căn Hộ" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ServiceItem"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                    <LinearLayout style="@style/ServiceIconContainerSmall">
+                        <ImageView
+                            style="@style/ServiceIconSmall"
+                            android:src="@android:drawable/ic_menu_directions" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceTextSmall"
+                        android:text="Tour &amp; HĐ" />
+                </LinearLayout>
+
+                <LinearLayout
+                    style="@style/ServiceItem"
+                    android:layout_width="0dp"
+                    android:layout_weight="1">
+                    <LinearLayout style="@style/ServiceIconContainerSmall">
+                        <ImageView
+                            style="@style/ServiceIconSmall"
+                            android:src="@android:drawable/ic_menu_compass" />
+                    </LinearLayout>
+                    <TextView
+                        style="@style/ServiceTextSmall"
+                        android:text="Thuê xe" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    <!-- Tiêu đề Khám phá Việt Nam (Cố định) -->
+    <TextView
+        android:id="@+id/tvExploreTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Khám phá Việt Nam"
+        android:textColor="#333333"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/serviceCard" />
+
+
+    <!-- Phần cuộn (Chỉ cuộn danh sách tin tức) -->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:layout_editor_absoluteY="352dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="387dp"
+        android:layout_height="279dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nestedScrollView"
+        app:layout_constraintVertical_bias="0.07" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="409dp"
+        android:layout_height="91dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
