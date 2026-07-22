@@ -115,38 +115,19 @@
                         android:text="Nhà hàng" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/btnTrain"
-                    style="@style/ServiceItem">
-                    <LinearLayout style="@style/ServiceIconContainer">
-                        <ImageView
-                            style="@style/ServiceIcon"
-                            android:src="@android:drawable/ic_dialog_map" />
-                    </LinearLayout>
-                    <TextView
-                        style="@style/ServiceText"
-                        android:text="Vé tàu" />
-                </LinearLayout>
+
             </LinearLayout>
 
-            <!-- Hàng 2 (Cân đối lại 3 mục - Căn giữa hoàn hảo) -->
+            <!-- Hàng 2 (Cân đối lại 3 mục) -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="4"
                 android:baselineAligned="false">
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5" />
-
                 <LinearLayout
-                    style="@style/ServiceItem"
-                    android:layout_width="0dp"
-                    android:layout_weight="1">
+                    android:id="@+id/btnApartment"
+                    style="@style/ServiceItem">
                     <LinearLayout style="@style/ServiceIconContainerSmall">
                         <ImageView
                             style="@style/ServiceIconSmall"
@@ -158,9 +139,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/ServiceItem"
-                    android:layout_width="0dp"
-                    android:layout_weight="1">
+                    android:id="@+id/btnTour"
+                    style="@style/ServiceItem">
                     <LinearLayout style="@style/ServiceIconContainerSmall">
                         <ImageView
                             style="@style/ServiceIconSmall"
@@ -172,9 +152,8 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    style="@style/ServiceItem"
-                    android:layout_width="0dp"
-                    android:layout_weight="1">
+                    android:id="@+id/btnCarRental"
+                    style="@style/ServiceItem">
                     <LinearLayout style="@style/ServiceIconContainerSmall">
                         <ImageView
                             style="@style/ServiceIconSmall"
@@ -184,11 +163,6 @@
                         style="@style/ServiceTextSmall"
                         android:text="Thuê xe" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.5" />
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

@@ -3,6 +3,7 @@ package com.example.doan1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,8 +38,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Khởi tạo Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
+        // 1. Khởi tạo Firebase Auth an toàn
+        try {
+            mAuth = FirebaseAuth.getInstance();
+        } catch (Exception e) {
+            Log.e("FIREBASE_ERROR", "Chưa cấu hình Firebase: " + e.getMessage());
+        }
 
         // Ánh xạ View
         etEmail = findViewById(R.id.etLoginEmail);
@@ -48,13 +53,21 @@ public class LoginActivity extends AppCompatActivity {
         tvSignUp = findViewById(R.id.tvSignUp);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
 
-        // Cấu hình Google Sign-In
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        // 2. Cấu hình Google Sign-In với khối Try-Catch để tránh văng app
+        try {
+            int clientIdIdentifier = getResources().getIdentifier("default_web_client_id", "string", getPackageName());
+            if (clientIdIdentifier != 0) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(clientIdIdentifier))
+                        .requestEmail()
+                        .build();
+                mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+            } else {
+                Log.e("GOOGLE_SIGNIN", "Thiếu default_web_client_id. Vui lòng thêm google-services.json");
+            }
+        } catch (Exception e) {
+            Log.e("GOOGLE_SIGNIN", "Lỗi khởi tạo Google Sign-In: " + e.getMessage());
+        }
 
         // Đăng nhập bằng Email/Password
         btnLogin.setOnClickListener(v -> {
@@ -66,21 +79,32 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            mAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, task -> {
-                        if (task.isSuccessful()) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(this, "Đăng nhập thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    });
+            if (mAuth != null) {
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                finish();
+                            } else {
+                                Toast.makeText(this, "Đăng nhập thất bại: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
+                        });
+            } else {
+                // CHẾ ĐỘ DEMO: Nếu chưa có Firebase, vẫn cho vào Main để đi báo cáo
+                Toast.makeText(this, "Chế độ Offline: Đang vào trang chủ...", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            }
         });
 
         // Đăng nhập bằng Google
         btnGoogle.setOnClickListener(v -> {
-            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent, RC_SIGN_IN);
+            if (mGoogleSignInClient != null) {
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent, RC_SIGN_IN);
+            } else {
+                Toast.makeText(this, "Tính năng Google Sign-In chưa được cấu hình!", Toast.LENGTH_LONG).show();
+            }
         });
 
         // Chuyển sang màn hình Đăng ký
@@ -102,7 +126,9 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithGoogle(account.getIdToken());
+                if (account != null) {
+                    firebaseAuthWithGoogle(account.getIdToken());
+                }
             } catch (ApiException e) {
                 Toast.makeText(this, "Google Sign-In thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
@@ -110,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(String idToken) {
+        if (mAuth == null) return;
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {

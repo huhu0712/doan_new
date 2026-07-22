@@ -13,10 +13,11 @@ public interface ApiService {
         @Header("X-RapidAPI-Host") String apiHost,
         @Query("dest_type") String destType,
         @Query("dest_id") String destId,
-        @Query("arrival_date") String checkIn,
-        @Query("departure_date") String checkOut,
-        @Query("guest_qty") int adults, // Sửa thành guest_qty theo hình của bạn
-        @Query("room_qty") int rooms,    // Sửa thành room_qty theo hình của bạn
+        @Query("arrival_date") String arrivalDate,   // Theo đúng hình bạn chụp
+        @Query("departure_date") String departureDate, // Theo đúng hình bạn chụp
+        @Query("guest_qty") int guestQty,             // Theo đúng hình bạn chụp
+        @Query("room_qty") int roomQty,               // Theo đúng hình bạn chụp
+        @Query("order_by") String orderBy,
         @Query("units") String units,
         @Query("locale") String locale
     );

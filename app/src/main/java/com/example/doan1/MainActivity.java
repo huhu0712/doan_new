@@ -32,38 +32,47 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Ánh xạ View
+        // Ánh xạ View an toàn
         rvDestinations = findViewById(R.id.rvDestinations);
         btnHotel = findViewById(R.id.btnHotel);
-        
-        // Cấu hình RecyclerView - Tắt NestedScrolling để cuộn mượt trong NestedScrollView
-        rvDestinations.setLayoutManager(new LinearLayoutManager(this));
-        rvDestinations.setNestedScrollingEnabled(false);
-        adapter = new DestinationAdapter(this, vnItems);
-        rvDestinations.setAdapter(adapter);
-
-        View searchBar = findViewById(R.id.searchBar);
-        searchBar.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-            startActivity(intent);
-        });
-
-        btnHotel.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, HotelActivity.class);
-            startActivity(intent);
-        });
-
+        View btnApartment = findViewById(R.id.btnApartment);
         View btnFlight = findViewById(R.id.btnFlight);
-        btnFlight.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, FlightActivity.class);
-            startActivity(intent);
-        });
+        View searchBar = findViewById(R.id.searchBar);
 
-        View btnTrain = findViewById(R.id.btnTrain);
-        btnTrain.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TrainActivity.class);
-            startActivity(intent);
-        });
+        // Kiểm tra null để tránh văng app
+        if (btnHotel != null) {
+            btnHotel.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, HotelActivity.class)));
+        }
+
+        if (btnApartment != null) {
+            btnApartment.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ApartmentActivity.class)));
+        }
+
+        View btnCarRental = findViewById(R.id.btnCarRental);
+        if (btnCarRental != null) {
+            btnCarRental.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, CarRentalActivity.class)));
+        }
+
+        View btnTour = findViewById(R.id.btnTour);
+        if (btnTour != null) {
+            btnTour.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TourActivity.class)));
+        }
+
+        if (btnFlight != null) {
+            btnFlight.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, FlightActivity.class)));
+        }
+
+        if (searchBar != null) {
+            searchBar.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SearchActivity.class)));
+        }
+
+        // Cấu hình RecyclerView - Tắt NestedScrolling để cuộn mượt trong NestedScrollView
+        if (rvDestinations != null) {
+            rvDestinations.setLayoutManager(new androidx.recyclerview.widget.LinearLayoutManager(this));
+            rvDestinations.setNestedScrollingEnabled(false);
+            adapter = new DestinationAdapter(this, vnItems);
+            rvDestinations.setAdapter(adapter);
+        }
 
         // Cấu hình Bottom Navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
